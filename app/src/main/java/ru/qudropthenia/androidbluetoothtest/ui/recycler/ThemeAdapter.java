@@ -14,44 +14,44 @@ import java.util.List;
 
 import ru.qudropthenia.androidbluetoothtest.R;
 
-public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.ColorHolder> {
-    private final List<ColorStyle> colorList;
+public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.ThemeViewHolder> {
+    private final List<Theme> themes;
 
-    public ColorsAdapter(List<ColorStyle> colorList) {
-        this.colorList = colorList;
+    public ThemeAdapter(List<Theme> themes) {
+        this.themes = themes;
     }
 
     // Создание
     @NonNull
     @Override
-    public ColorHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ThemeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.recycler_item, parent, false);
-        return new ColorHolder(view);
+        return new ThemeViewHolder(view);
     }
 
     // Запись новых данных
     @Override
-    public void onBindViewHolder(@NonNull ColorHolder holder, final int position) {
-        ColorStyle color = colorList.get(position);
+    public void onBindViewHolder(@NonNull ThemeViewHolder holder, final int position) {
+        Theme color = themes.get(position);
         holder.bind(color);
         holder.itemView.setTag(color);
     }
 
     @Override
     public int getItemCount() {
-        return colorList.size();
+        return themes.size();
     }
 
     // Модель отрисовки
-    static final class ColorHolder extends RecyclerView.ViewHolder {
+    static final class ThemeViewHolder extends RecyclerView.ViewHolder {
         public final View colorView;
         public final TextView contrastValueView;
         public final TextView brightnessValueView;
 
         // View - что будет отрисовано в ячейке
-        public ColorHolder(@NonNull View itemView) {
+        public ThemeViewHolder(@NonNull View itemView) {
             super(itemView);
             colorView = itemView.findViewById(R.id.recycler_item__color);
             contrastValueView = itemView.findViewById(R.id.recycler_item__contrast_value);
@@ -59,10 +59,11 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.ColorHolde
         }
 
         // Установка значений, которые будут отрисованы
-        public void bind(ColorStyle style) {
+        public void bind(Theme theme) {
             Drawable backgroundColor = new ColorDrawable(0xFFFF6666);
-            String contrast = style.getContrast() + "";
-            String bright = style.getBrightness() + "";
+            String contrast = theme.getContrast() + "";
+            String bright = theme.getBrightness() + "";
+
             colorView.setBackground(backgroundColor);
             contrastValueView.setText(contrast);
             brightnessValueView.setText(bright);

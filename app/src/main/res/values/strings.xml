@@ -1,5 +1,10 @@
 <resources>
-    <string name="app_name">My app</string>
+    <!-- App data-->
+    <string name="app_name">AndroidBluetoothTest</string>
+
+    <!-- Recycler item-->
     <string name="recycler_item__label_contrast">Контраст:</string>
     <string name="recycler_item__label_brightness">Яркость:</string>
+
+    <string name="dlgSelectColor">dlgSelectColor</string>
 </resources>

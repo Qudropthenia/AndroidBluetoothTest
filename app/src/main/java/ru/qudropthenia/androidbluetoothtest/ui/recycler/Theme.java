@@ -1,17 +1,17 @@
 package ru.qudropthenia.androidbluetoothtest.ui.recycler;
 
-public class ColorStyle {
+public class Theme {
     private String color;
     private Integer contrast;
     private Integer brightness;
 
-    public ColorStyle(String color, Integer contrast, Integer brightness) {
+    public Theme(String color, Integer contrast, Integer brightness) {
         this.color = color;
         this.contrast = contrast;
         this.brightness = brightness;
     }
 
-    public ColorStyle() {
+    public Theme() {
         this("red", 0, 0);
     }
 
