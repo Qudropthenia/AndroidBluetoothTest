@@ -20,6 +20,10 @@ public class RecyclerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         colorList = generateColors();
         setContentView(R.layout.activity_recycler);
+        setupRecyclerView();
+    }
+
+    private void setupRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.activity_recycler__recycler);
         ColorsAdapter adapter = new ColorsAdapter(colorList);
         recyclerView.setAdapter(adapter);
