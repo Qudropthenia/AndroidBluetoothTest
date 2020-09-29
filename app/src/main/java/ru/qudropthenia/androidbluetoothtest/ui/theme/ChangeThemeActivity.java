@@ -1,34 +1,50 @@
 package ru.qudropthenia.androidbluetoothtest.ui.theme;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.jaredrummler.android.colorpicker.ColorPanelView;
 import com.jaredrummler.android.colorpicker.ColorPickerView;
 
 import ru.qudropthenia.androidbluetoothtest.R;
+import ru.qudropthenia.androidbluetoothtest.ui.recycler.Theme;
 
-public class ChangeThemeActivity extends AppCompatActivity implements ColorPickerView.OnColorChangedListener, View.OnClickListener {
+public class ChangeThemeActivity extends Activity implements ColorPickerView.OnColorChangedListener, View.OnClickListener {
     private ColorPickerView colorPickerView;
     private ColorPanelView newColorPanelView;
+    private Theme theme;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFormat(PixelFormat.RGBA_8888);
 
+        // Получение переданной темы
+        Bundle arguments = getIntent().getExtras();
+        if (arguments != null) {
+            theme = (Theme) arguments.getSerializable(Theme.class.getSimpleName());
+            Log.d("(arguments != null)", "+");
+        } else {
+            theme = new Theme();
+            Log.d("(arguments != null)", "-");
+        }
+        Log.d("NULL", (theme == null) ? "NULL" : "NOT NUL");
+
         setContentView(R.layout.activity_change_theme);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         int initialColor = prefs.getInt("color_3", 0xFF000000);
+//        int initialColor = prefs.getInt("color_3", theme.getColor());
 
         colorPickerView = (ColorPickerView) findViewById(R.id.activity_change__color_picker);
         ColorPanelView colorPanelView = (ColorPanelView) findViewById(R.id.activity_change__panel_old);
@@ -48,20 +64,28 @@ public class ChangeThemeActivity extends AppCompatActivity implements ColorPicke
         btnCancel.setOnClickListener(this);
     }
 
-    @Override public void onColorChanged(int newColor) {
+    @Override
+    public void onColorChanged(int newColor) {
         newColorPanelView.setColor(colorPickerView.getColor());
     }
 
-    @Override public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
         switch (v.getId()) {
             case R.id.activity_change__okButton:
+                int newColor = colorPickerView.getColor();
                 SharedPreferences.Editor edit = PreferenceManager.getDefaultSharedPreferences(this).edit();
-                edit.putInt("color_3", colorPickerView.getColor());
+                edit.putInt("color_3", newColor);
                 edit.apply();
-//                finish();
+                try {
+                    theme.setColor(newColor);
+                } catch (Exception e) {
+                    Toast.makeText(this, "Err", Toast.LENGTH_LONG).show();
+                }
+                finish();
                 break;
             case R.id.activity_change__cancelButton:
-//                finish();
+                finish();
                 break;
         }
     }

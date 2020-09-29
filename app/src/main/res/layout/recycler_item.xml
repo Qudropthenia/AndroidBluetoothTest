@@ -1,65 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:layout_height="70dp"
+    android:layout_marginBottom="3dp"
+    android:orientation="horizontal"
+    android:background="@android:color/darker_gray">
 
     <View
         android:id="@+id/recycler_item__color"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/recycler_item__label_contrast"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/recycler_item__label_contrast"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/recycler_item__label_brightness"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@id/recycler_item__color"
-        app:layout_constraintTop_toTopOf="parent" />
-    <!--    app:layout_constraintEnd_toEndOf="parent"-->
+        android:layout_weight="85" />
 
-    <TextView
-        android:id="@+id/recycler_item__label_brightness"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/recycler_item__label_brightness"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/recycler_item__color"
-        app:layout_constraintTop_toBottomOf="@id/recycler_item__label_contrast" />
-    <!--    app:layout_constraintEnd_toEndOf="parent"-->
+    <LinearLayout
+        android:id="@+id/recycler_item__btn_group"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:layout_weight="15"
+        android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/recycler_item__barrier"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:barrierDirection="end"
-        app:constraint_referenced_ids="recycler_item__label_contrast, recycler_item__label_brightness" />
+        <ImageView
+            android:id="@+id/recycler_item__btn_edit"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="5dp"
+            android:layout_weight="50"
+            android:src="@drawable/edit"
+            android:background="@android:color/holo_blue_dark"
+            android:onClick="onClick"/>
 
-    <TextView
-        android:id="@+id/recycler_item__contrast_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        app:layout_constraintBaseline_toBaselineOf="@id/recycler_item__label_contrast"
-        app:layout_constraintStart_toEndOf="@id/recycler_item__barrier"
-        tools:text="25" />
+        <ImageView
+            android:id="@+id/recycler_item__btn_delete"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="5dp"
+            android:layout_weight="50"
+            android:src="@drawable/garbage"
+            android:onClick="onClick"/>
+    </LinearLayout>
+</LinearLayout>
 
-    <TextView
-        android:id="@+id/recycler_item__brightness_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        app:layout_constraintBaseline_toBaselineOf="@id/recycler_item__label_brightness"
-        app:layout_constraintStart_toEndOf="@id/recycler_item__barrier"
-        tools:text="25" />
+    <!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    xmlns:tools="http://schemas.android.com/tools"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="wrap_content"-->
+    <!--    android:padding="10dp">-->
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!--    <View-->
+    <!--        android:id="@+id/recycler_item__color"-->
+    <!--        android:layout_width="100dp"-->
+    <!--        android:layout_height="100dp"-->
+    <!--        android:background="@android:color/darker_gray"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/recycler_item__label_contrast"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="@string/recycler_item__label_contrast"-->
+    <!--        android:textSize="20sp"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/recycler_item__label_brightness"-->
+    <!--        app:layout_constraintHorizontal_chainStyle="packed"-->
+    <!--        app:layout_constraintStart_toEndOf="@id/recycler_item__color"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <!--    &lt;!&ndash;    app:layout_constraintEnd_toEndOf="parent"&ndash;&gt;-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/recycler_item__label_brightness"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="@string/recycler_item__label_brightness"-->
+    <!--        android:textSize="20sp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/recycler_item__color"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/recycler_item__label_contrast" />-->
+    <!--    &lt;!&ndash;    app:layout_constraintEnd_toEndOf="parent"&ndash;&gt;-->
+
+    <!--    <androidx.constraintlayout.widget.Barrier-->
+    <!--        android:id="@+id/recycler_item__barrier"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        app:barrierDirection="end"-->
+    <!--        app:constraint_referenced_ids="recycler_item__label_contrast, recycler_item__label_brightness" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/recycler_item__contrast_value"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:textSize="25sp"-->
+    <!--        app:layout_constraintBaseline_toBaselineOf="@id/recycler_item__label_contrast"-->
+    <!--        app:layout_constraintStart_toEndOf="@id/recycler_item__barrier"-->
+    <!--        tools:text="25" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/recycler_item__brightness_value"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:textSize="25sp"-->
+    <!--        app:layout_constraintBaseline_toBaselineOf="@id/recycler_item__label_brightness"-->
+    <!--        app:layout_constraintStart_toEndOf="@id/recycler_item__barrier"-->
+    <!--        tools:text="25" />-->
+
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->

@@ -1,25 +1,27 @@
 package ru.qudropthenia.androidbluetoothtest.ui.recycler;
 
-public class Theme {
-    private String color;
+import java.io.Serializable;
+
+public class Theme implements Serializable {
+    private Integer color;
     private Integer contrast;
     private Integer brightness;
 
-    public Theme(String color, Integer contrast, Integer brightness) {
+    public Theme(Integer color, Integer contrast, Integer brightness) {
         this.color = color;
         this.contrast = contrast;
         this.brightness = brightness;
     }
 
     public Theme() {
-        this("red", 0, 0);
+        this(0, 0, 0);
     }
 
-    public String getColor() {
+    public Integer getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(Integer color) {
         this.color = color;
     }
 
