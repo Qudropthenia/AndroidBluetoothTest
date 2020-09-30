@@ -33,18 +33,16 @@ public class ChangeThemeActivity extends Activity implements ColorPickerView.OnC
         Bundle arguments = getIntent().getExtras();
         if (arguments != null) {
             theme = (Theme) arguments.getSerializable(Theme.class.getSimpleName());
-            Log.d("(arguments != null)", "+");
+            Log.d("GET COLOR", theme.getColor() + "");
         } else {
             theme = new Theme();
-            Log.d("(arguments != null)", "-");
         }
-        Log.d("NULL", (theme == null) ? "NULL" : "NOT NUL");
 
         setContentView(R.layout.activity_change_theme);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        int initialColor = prefs.getInt("color_3", 0xFF000000);
-//        int initialColor = prefs.getInt("color_3", theme.getColor());
+//        int initialColor = prefs.getInt("color_3", 0xFF000000);
+        int initialColor = prefs.getInt("color_picker", theme.getColor());
 
         colorPickerView = (ColorPickerView) findViewById(R.id.activity_change__color_picker);
         ColorPanelView colorPanelView = (ColorPanelView) findViewById(R.id.activity_change__panel_old);
@@ -82,7 +80,8 @@ public class ChangeThemeActivity extends Activity implements ColorPickerView.OnC
                 } catch (Exception e) {
                     Toast.makeText(this, "Err", Toast.LENGTH_LONG).show();
                 }
-                finish();
+                Log.d("New color", theme.getColor() + "");
+//                finish();
                 break;
             case R.id.activity_change__cancelButton:
                 finish();

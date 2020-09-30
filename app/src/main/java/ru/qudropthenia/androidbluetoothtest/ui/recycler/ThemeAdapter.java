@@ -16,12 +16,10 @@ import ru.qudropthenia.androidbluetoothtest.R;
 public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.ThemeViewHolder> {
     private final List<Theme> themes;
     private final Listener onThemeClickListener;
-    private final View.OnClickListener btnClick;
 
-    public ThemeAdapter(List<Theme> themes, Listener onThemeClickListener, View.OnClickListener btnClick) {
+    public ThemeAdapter(List<Theme> themes, Listener onThemeClickListener) {
         this.themes = themes;
         this.onThemeClickListener = onThemeClickListener;
-        this.btnClick = btnClick;
     }
 
     // Создание
@@ -38,9 +36,12 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.ThemeViewHol
     // Запись новых данных
     @Override
     public void onBindViewHolder(@NonNull ThemeViewHolder holder, final int position) {
-        Theme color = themes.get(position);
-        holder.bind(color);
-        holder.itemView.setTag(color);
+        Theme theme = themes.get(position);
+        holder.bind(theme);
+        holder.itemView.setTag(theme);
+        // Устанавливаем привязку к Theme
+        holder.itemView.findViewById(R.id.recycler_item__btn_edit).setTag(theme);
+        holder.itemView.findViewById(R.id.recycler_item__btn_delete).setTag(theme);
     }
 
     @Override
@@ -56,7 +57,6 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.ThemeViewHol
         public ThemeViewHolder(@NonNull View itemView) {
             super(itemView);
             colorView = itemView.findViewById(R.id.recycler_item__color);
-//            View viewById = itemView.findViewById(R.id.recycler_item__btn_edit);
         }
 
         // Установка значений, которые будут отрисованы

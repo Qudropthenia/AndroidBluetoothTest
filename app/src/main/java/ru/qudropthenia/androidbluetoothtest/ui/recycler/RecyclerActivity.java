@@ -3,6 +3,7 @@ package ru.qudropthenia.androidbluetoothtest.ui.recycler;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ public class RecyclerActivity extends Activity implements View.OnClickListener {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.d("RecyclerActivity", "onCreate");
         super.onCreate(savedInstanceState);
         themes = generateTheme();
         setContentView(R.layout.activity_recycler);
@@ -29,7 +31,7 @@ public class RecyclerActivity extends Activity implements View.OnClickListener {
 
     private void setupRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.activity_recycler__recycler);
-        ThemeAdapter adapter = new ThemeAdapter(themes, this::onThemeClick, this::onClick);
+        ThemeAdapter adapter = new ThemeAdapter(themes, this::onThemeClick);
         recyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -43,10 +45,10 @@ public class RecyclerActivity extends Activity implements View.OnClickListener {
     private List<Theme> generateTheme() {
         List<Theme> themes = new ArrayList<>();
 
-        themes.add(new Theme(27100, 1, 23));
-        themes.add(new Theme(17871, 6, 42));
+        themes.add(new Theme(-14784585, 1, 23));
+        themes.add(new Theme(-1029169481, 6, 42));
         themes.add(new Theme(-17871, 1, 1));
-        themes.add(new Theme(37871, 56, 1));
+        themes.add(new Theme(1702597404, 56, 1));
 
         return themes;
     }
@@ -55,7 +57,6 @@ public class RecyclerActivity extends Activity implements View.OnClickListener {
     public void onClick(View view) {
         String msg = "";
         Theme theme = (Theme) view.getTag();
-        Toast.makeText(this, "", Toast.LENGTH_LONG).show();
 
         switch (view.getId()) {
             case R.id.recycler_item__btn_edit: {
@@ -63,7 +64,7 @@ public class RecyclerActivity extends Activity implements View.OnClickListener {
                 Intent intent = new Intent(this, ChangeThemeActivity.class);
                 intent.putExtra(Theme.class.getSimpleName(), theme);
                 startActivity(intent);
-
+//                finish();
                 break;
             }
             case R.id.recycler_item__btn_delete: {

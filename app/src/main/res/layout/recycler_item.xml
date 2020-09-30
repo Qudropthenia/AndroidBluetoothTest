@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recycler_item__color"
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:layout_marginBottom="3dp"
-    android:orientation="horizontal"
-    android:background="@android:color/darker_gray">
+    android:background="@android:color/darker_gray"
+    android:orientation="horizontal">
 
     <View
-        android:id="@+id/recycler_item__color"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="85" />
@@ -25,9 +25,8 @@
             android:layout_height="0dp"
             android:layout_margin="5dp"
             android:layout_weight="50"
-            android:src="@drawable/edit"
-            android:background="@android:color/holo_blue_dark"
-            android:onClick="onClick"/>
+            android:onClick="onClick"
+            android:src="@drawable/edit" />
 
         <ImageView
             android:id="@+id/recycler_item__btn_delete"
@@ -35,8 +34,8 @@
             android:layout_height="0dp"
             android:layout_margin="5dp"
             android:layout_weight="50"
-            android:src="@drawable/garbage"
-            android:onClick="onClick"/>
+            android:onClick="onClick"
+            android:src="@drawable/garbage" />
     </LinearLayout>
 </LinearLayout>
 
