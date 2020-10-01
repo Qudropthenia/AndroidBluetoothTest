@@ -1,6 +1,7 @@
 package ru.qudropthenia.androidbluetoothtest.ui.theme;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
@@ -17,23 +18,28 @@ import com.jaredrummler.android.colorpicker.ColorPanelView;
 import com.jaredrummler.android.colorpicker.ColorPickerView;
 
 import ru.qudropthenia.androidbluetoothtest.R;
-import ru.qudropthenia.androidbluetoothtest.ui.recycler.Theme;
+import ru.qudropthenia.androidbluetoothtest.ui.recycler.RecyclerActivity;
+import ru.qudropthenia.androidbluetoothtest.engine.Theme;
+import ru.qudropthenia.androidbluetoothtest.engine.ThemeList;
 
 public class ChangeThemeActivity extends Activity implements ColorPickerView.OnColorChangedListener, View.OnClickListener {
     private ColorPickerView colorPickerView;
     private ColorPanelView newColorPanelView;
+    private int themeIndex;
     private Theme theme;
+    private ThemeList themeListApp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFormat(PixelFormat.RGBA_8888);
+        themeListApp = ((ThemeList) getApplication());
 
         // Получение переданной темы
         Bundle arguments = getIntent().getExtras();
         if (arguments != null) {
-            theme = (Theme) arguments.getSerializable(Theme.class.getSimpleName());
-            Log.d("GET COLOR", theme.getColor() + "");
+            themeIndex = (Integer) arguments.getSerializable(Integer.class.getSimpleName());
+            theme = themeListApp.getThemeAtIndex(themeIndex);
         } else {
             theme = new Theme();
         }
@@ -70,7 +76,7 @@ public class ChangeThemeActivity extends Activity implements ColorPickerView.OnC
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.activity_change__okButton:
+            case R.id.activity_change__okButton: {
                 int newColor = colorPickerView.getColor();
                 SharedPreferences.Editor edit = PreferenceManager.getDefaultSharedPreferences(this).edit();
                 edit.putInt("color_3", newColor);
@@ -80,13 +86,22 @@ public class ChangeThemeActivity extends Activity implements ColorPickerView.OnC
                 } catch (Exception e) {
                     Toast.makeText(this, "Err", Toast.LENGTH_LONG).show();
                 }
+                themeListApp.setTheme(themeIndex, theme);
                 Log.d("New color", theme.getColor() + "");
-//                finish();
-                break;
-            case R.id.activity_change__cancelButton:
+                showRecycler();
                 finish();
                 break;
+            }
+            case R.id.activity_change__cancelButton: {
+                showRecycler();
+                break;
+            }
         }
+    }
+
+    private void showRecycler() {
+        Intent intent = new Intent(this, RecyclerActivity.class);
+        startActivity(intent);
     }
 }
 // Пример использования https://habr.com/ru/post/496136/

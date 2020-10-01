@@ -5,6 +5,7 @@
     <!-- Recycler item-->
     <string name="recycler_item__label_contrast">Контраст:</string>
     <string name="recycler_item__label_brightness">Яркость:</string>
+    <string name="addNewRecyclerItem">Добавить</string>
 
     <string name="dlgSelectColor">dlgSelectColor</string>
 </resources>

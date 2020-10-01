@@ -1,4 +1,4 @@
-package ru.qudropthenia.androidbluetoothtest.ui.recycler;
+package ru.qudropthenia.androidbluetoothtest.engine;
 
 import java.io.Serializable;
 
@@ -14,7 +14,7 @@ public class Theme implements Serializable {
     }
 
     public Theme() {
-        this(0, 0, 0);
+        this(-1029169481, 0, 0);
     }
 
     public Integer getColor() {

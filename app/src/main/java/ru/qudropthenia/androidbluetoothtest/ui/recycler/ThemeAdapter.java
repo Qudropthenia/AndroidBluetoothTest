@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ru.qudropthenia.androidbluetoothtest.R;
+import ru.qudropthenia.androidbluetoothtest.engine.Theme;
 
 public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.ThemeViewHolder> {
     private final List<Theme> themes;
@@ -38,10 +39,10 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.ThemeViewHol
     public void onBindViewHolder(@NonNull ThemeViewHolder holder, final int position) {
         Theme theme = themes.get(position);
         holder.bind(theme);
-        holder.itemView.setTag(theme);
+        holder.itemView.setTag(position);
         // Устанавливаем привязку к Theme
-        holder.itemView.findViewById(R.id.recycler_item__btn_edit).setTag(theme);
-        holder.itemView.findViewById(R.id.recycler_item__btn_delete).setTag(theme);
+        holder.itemView.findViewById(R.id.recycler_item__btn_edit).setTag(position);
+        holder.itemView.findViewById(R.id.recycler_item__btn_delete).setTag(position);
     }
 
     @Override
