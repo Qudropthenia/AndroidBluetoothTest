@@ -20,5 +20,7 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".ui.theme.ChangeThemeActivity" />
+        <activity android:name=".engine.bluetooth.Bluetooth" />
     </application>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
 </manifest>

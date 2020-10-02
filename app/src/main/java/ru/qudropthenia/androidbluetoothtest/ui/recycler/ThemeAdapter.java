@@ -30,7 +30,8 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.ThemeViewHol
         View view = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.recycler_item, parent, false);
-        view.setOnClickListener(v -> onThemeClickListener.onThemeClick((Theme) v.getTag(), v));
+//        view.setOnClickListener(v -> onThemeClickListener.onThemeClick((Theme) v.getTag(), v));
+//        view.setOnClickListener(v -> onThemeClickListener.onThemeClick((Theme) v.getTag(), v));
         return new ThemeViewHolder(view);
     }
 
