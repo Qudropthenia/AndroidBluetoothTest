@@ -9,7 +9,8 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -18,13 +19,14 @@ import com.jaredrummler.android.colorpicker.ColorPanelView;
 import com.jaredrummler.android.colorpicker.ColorPickerView;
 
 import ru.qudropthenia.androidbluetoothtest.R;
-import ru.qudropthenia.androidbluetoothtest.ui.recycler.RecyclerActivity;
 import ru.qudropthenia.androidbluetoothtest.engine.Theme;
 import ru.qudropthenia.androidbluetoothtest.engine.ThemeList;
+import ru.qudropthenia.androidbluetoothtest.ui.recycler.RecyclerActivity;
 
 public class ChangeThemeActivity extends Activity implements ColorPickerView.OnColorChangedListener, View.OnClickListener {
     private ColorPickerView colorPickerView;
     private ColorPanelView newColorPanelView;
+    private SeekBar seekBar;
     private int themeIndex;
     private Theme theme;
     private ThemeList themeListApp;
@@ -35,7 +37,7 @@ public class ChangeThemeActivity extends Activity implements ColorPickerView.OnC
         getWindow().setFormat(PixelFormat.RGBA_8888);
         themeListApp = ((ThemeList) getApplication());
 
-        // Получение переданной темы
+        // Получение переданной темы по её индексу из List
         Bundle arguments = getIntent().getExtras();
         if (arguments != null) {
             themeIndex = (Integer) arguments.getSerializable(Integer.class.getSimpleName());
@@ -43,29 +45,51 @@ public class ChangeThemeActivity extends Activity implements ColorPickerView.OnC
         } else {
             theme = new Theme();
         }
-
         setContentView(R.layout.activity_change_theme);
+        initColorPanel();
+        initSeekBar();
+        Button btnOK = findViewById(R.id.activity_change__okButton);
+        Button btnCancel = findViewById(R.id.activity_change__cancelButton);
+        btnOK.setOnClickListener(this);
+        btnCancel.setOnClickListener(this);
+    }
 
+    private void initColorPanel() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 //        int initialColor = prefs.getInt("color_3", 0xFF000000);
         int initialColor = prefs.getInt("color_picker", theme.getColor());
-
         colorPickerView = (ColorPickerView) findViewById(R.id.activity_change__color_picker);
-        ColorPanelView colorPanelView = (ColorPanelView) findViewById(R.id.activity_change__panel_old);
         newColorPanelView = (ColorPanelView) findViewById(R.id.activity_change__panel_new);
-
-        Button btnOK = (Button) findViewById(R.id.activity_change__okButton);
-        Button btnCancel = (Button) findViewById(R.id.activity_change__cancelButton);
-
-        ((LinearLayout) colorPanelView.getParent()).setPadding(colorPickerView.getPaddingLeft(), 0,
-                colorPickerView.getPaddingRight(), 0);
-
         colorPickerView.setOnColorChangedListener(this);
         colorPickerView.setColor(initialColor, true);
-        colorPanelView.setColor(initialColor);
+    }
 
-        btnOK.setOnClickListener(this);
-        btnCancel.setOnClickListener(this);
+    private void initSeekBar() {
+        TextView seekBarTextView = findViewById(R.id.activity_change__bright);
+        seekBar = findViewById(R.id.activity_change__seekBar);
+        Integer brightness = theme.getBrightness();
+        seekBar.setProgress(brightness);
+        seekBarTextView.setText(getSeekBarText(brightness));
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                String seekBarText = getSeekBarText(progress);
+                seekBarTextView.setText(seekBarText);
+                theme.setBrightness(progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+    }
+
+    private String getSeekBarText(Integer value) {
+        return (int) (value * 0.4) + " %";
     }
 
     @Override

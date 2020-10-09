@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.jaredrummler.android.colorpicker.ColorPickerView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,7 +49,7 @@ public class RecyclerActivity extends AppCompatActivity implements View.OnClickL
     // App
     private ThemeAdapter adapter;
     private ThemeList themeListApp;
-    private final String LOG_TEG = "Bluetooth";
+    private final String LOG_TEG = "Bluetooth_app";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,7 +58,7 @@ public class RecyclerActivity extends AppCompatActivity implements View.OnClickL
         themeListApp = ((ThemeList) getApplication());
         setupRecyclerView();
         setupFloatingButton();
-        blOnCreate();
+//        blOnCreate();
     }
 
     // Инициализация Recycler
@@ -89,11 +91,11 @@ public class RecyclerActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        Integer themeIndex = (Integer) view.getTag();
+        final Integer themeIndex = (Integer) view.getTag();
 
         switch (view.getId()) {
             case R.id.recycler_item__btn_edit: {
-                Intent intent = new Intent(this, ChangeThemeActivity.class);
+                final Intent intent = new Intent(this, ChangeThemeActivity.class);
                 intent.putExtra(Integer.class.getSimpleName(), themeIndex);
                 startActivity(intent);
                 finish();
@@ -105,11 +107,11 @@ public class RecyclerActivity extends AppCompatActivity implements View.OnClickL
                 break;
             }
             case R.id.recycler_item__color: {
-                Theme theme = themeListApp.getThemeAtIndex(themeIndex);
-                String sendData = theme.getColor().toString();
-                Log.v(LOG_TEG, "Отправили: " + sendData);
-                byte[] bytesToSend = sendData.getBytes();
-                myThreadConnected.write(bytesToSend);
+                final Theme theme = themeListApp.getThemeAtIndex(themeIndex);
+                String strRGB = theme.getRGB().strRGB();
+                Log.v(LOG_TEG, "Отправили: " + strRGB);
+                byte[] bytesToSend = strRGB.getBytes();
+//                myThreadConnected.write(bytesToSend);
                 break;
             }
             default: {
@@ -142,11 +144,11 @@ public class RecyclerActivity extends AppCompatActivity implements View.OnClickL
     protected void onStart() {
         super.onStart();
         // Запрос на включение Bluetooth
-        if (!bluetoothAdapter.isEnabled()) {
-            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-        }
-        setup();
+//        if (!bluetoothAdapter.isEnabled()) {
+//            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+//            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+//        }
+//        setup();
     }
 
     private void setup() {
@@ -262,11 +264,10 @@ public class RecyclerActivity extends AppCompatActivity implements View.OnClickL
                     String strIncom = new String(buffer, 0, bytes);
                     sb.append(strIncom); // собираем символы в строку
                     int endOfLineIndex = sb.indexOf("\r\n"); // определяем конец строки
-                    Log.v(LOG_TEG, endOfLineIndex + "");
 
                     if (endOfLineIndex < 1) continue;
                     sbprint = sb.substring(0, endOfLineIndex);
-                    Log.v(LOG_TEG, "Get text: " + sbprint);
+//                    Log.v(LOG_TEG, "Get text: " + sbprint);
                     sb.delete(0, sb.length());
                     runOnUiThread(new Runnable() { // Вывод данных
                         @Override

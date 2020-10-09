@@ -2,9 +2,9 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="vertical"
     android:showDividers="middle"
@@ -20,40 +20,57 @@
             android:id="@+id/activity_change__color_picker"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            app:cpv_alphaChannelVisible="true" />
+            app:cpv_alphaChannelVisible="false" />
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/activity_change__color_picker"
             android:layout_alignLeft="@id/activity_change__color_picker"
             android:layout_alignRight="@id/activity_change__color_picker"
             android:layout_marginTop="16dp"
-            android:orientation="horizontal">
-
-            <com.jaredrummler.android.colorpicker.ColorPanelView
-                android:id="@+id/activity_change__panel_old"
-                android:layout_width="0px"
-                android:layout_height="fill_parent"
-                android:layout_weight="0.5"
-                app:cpv_borderColor="#0099cc"
-                app:cpv_colorShape="square" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center"
-                android:text="→"
-                android:textSize="20sp" />
+            android:orientation="vertical">
 
             <com.jaredrummler.android.colorpicker.ColorPanelView
                 android:id="@+id/activity_change__panel_new"
-                android:layout_width="0px"
-                android:layout_height="fill_parent"
-                android:layout_weight="0.5"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
                 app:cpv_colorShape="square" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/activity_change__lbl_bright"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_horizontal"
+                    android:text="@string/bright_value"
+                    android:textAlignment="center"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/activity_change__bright"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_horizontal"
+                    android:text="30"
+                    android:textAlignment="center"
+                    android:textSize="30sp" />
+
+                <SeekBar
+                    android:id="@+id/activity_change__seekBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:min="20"
+                    android:max="250" />
+
+            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 

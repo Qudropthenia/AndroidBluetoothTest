@@ -8,4 +8,5 @@
     <string name="addNewRecyclerItem">Добавить</string>
 
     <string name="dlgSelectColor">dlgSelectColor</string>
+    <string name="bright_value">Яркость подсветки:</string>
 </resources>

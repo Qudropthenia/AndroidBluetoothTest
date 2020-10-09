@@ -1,20 +1,25 @@
 package ru.qudropthenia.androidbluetoothtest.engine;
 
-import java.io.Serializable;
-
-public class Theme implements Serializable {
+public class Theme {
     private Integer color;
-    private Integer contrast;
     private Integer brightness;
+    private static final Integer DEFAULT_BRIGHTNESS = 100;
 
-    public Theme(Integer color, Integer contrast, Integer brightness) {
+    public Theme(Integer color, Integer brightness) {
         this.color = color;
-        this.contrast = contrast;
         this.brightness = brightness;
     }
 
+    public Theme(Integer color) {
+        this(color, DEFAULT_BRIGHTNESS);
+    }
+
     public Theme() {
-        this(-1029169481, 0, 0);
+        this(-13558637, DEFAULT_BRIGHTNESS);
+    }
+
+    public RGB getRGB() {
+        return new RGB(color);
     }
 
     public Integer getColor() {
@@ -25,19 +30,56 @@ public class Theme implements Serializable {
         this.color = color;
     }
 
-    public Integer getContrast() {
-        return contrast;
-    }
-
-    public void setContrast(Integer contrast) {
-        this.contrast = contrast;
-    }
-
     public Integer getBrightness() {
         return brightness;
     }
 
     public void setBrightness(Integer brightness) {
         this.brightness = brightness;
+    }
+
+    public class RGB {
+        public Integer R;
+        public Integer G;
+        public Integer B;
+
+        public RGB(Integer number) {
+            int color = intToHex(number);
+            R = (color >> 16) & 0xFF;
+            G = (color >> 8) & 0xFF;
+            B = (color >> 0) & 0xFF;
+        }
+
+        public String strRGB() {
+            return R + "," + G + "," + B;
+        }
+
+        public Integer intToHex(Integer number) {
+            return (int) Long.parseLong(Integer.toHexString(number), 16);
+        }
+
+        public Integer getR() {
+            return R;
+        }
+
+        public void setR(Integer r) {
+            R = r;
+        }
+
+        public Integer getG() {
+            return G;
+        }
+
+        public void setG(Integer g) {
+            G = g;
+        }
+
+        public Integer getB() {
+            return B;
+        }
+
+        public void setB(Integer b) {
+            B = b;
+        }
     }
 }

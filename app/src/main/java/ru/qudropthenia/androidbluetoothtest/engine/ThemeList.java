@@ -15,10 +15,10 @@ public class ThemeList extends Application {
     private List<Theme> initThemes() {
         List<Theme> themes = new ArrayList<>();
 
-        themes.add(new Theme(-14784585, 1, 23));
-        themes.add(new Theme(-1029169481, 6, 42));
-        themes.add(new Theme(-17871, 1, 1));
-        themes.add(new Theme(1702597404, 56, 1));
+        themes.add(new Theme(-14784585));
+        themes.add(new Theme(-5759305));
+        themes.add(new Theme(-17871));
+        themes.add(new Theme(-8678628));
 
         return themes;
     }
