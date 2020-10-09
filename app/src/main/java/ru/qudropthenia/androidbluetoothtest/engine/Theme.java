@@ -54,6 +54,10 @@ public class Theme {
             return R + "," + G + "," + B;
         }
 
+        public String strTheme() {
+            return strRGB() + "," + brightness;
+        }
+
         public Integer intToHex(Integer number) {
             return (int) Long.parseLong(Integer.toHexString(number), 16);
         }

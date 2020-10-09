@@ -67,8 +67,8 @@
                     android:id="@+id/activity_change__seekBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:min="20"
-                    android:max="250" />
+                    android:min="0"
+                    android:max="255" />
 
             </LinearLayout>
         </LinearLayout>

@@ -89,7 +89,7 @@ public class ChangeThemeActivity extends Activity implements ColorPickerView.OnC
     }
 
     private String getSeekBarText(Integer value) {
-        return (int) (value * 0.4) + " %";
+        return (int) Math.ceil(value * 0.39) + " %";
     }
 
     @Override

@@ -5,12 +5,10 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -19,12 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.jaredrummler.android.colorpicker.ColorPickerView;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -33,8 +29,6 @@ import ru.qudropthenia.androidbluetoothtest.R;
 import ru.qudropthenia.androidbluetoothtest.engine.Theme;
 import ru.qudropthenia.androidbluetoothtest.engine.ThemeList;
 import ru.qudropthenia.androidbluetoothtest.ui.theme.ChangeThemeActivity;
-
-import static android.R.layout.simple_list_item_1;
 
 public class RecyclerActivity extends AppCompatActivity implements View.OnClickListener {
     // BL
@@ -58,7 +52,7 @@ public class RecyclerActivity extends AppCompatActivity implements View.OnClickL
         themeListApp = ((ThemeList) getApplication());
         setupRecyclerView();
         setupFloatingButton();
-//        blOnCreate();
+        blOnCreate();
     }
 
     // Инициализация Recycler
@@ -108,10 +102,10 @@ public class RecyclerActivity extends AppCompatActivity implements View.OnClickL
             }
             case R.id.recycler_item__color: {
                 final Theme theme = themeListApp.getThemeAtIndex(themeIndex);
-                String strRGB = theme.getRGB().strRGB();
-                Log.v(LOG_TEG, "Отправили: " + strRGB);
-                byte[] bytesToSend = strRGB.getBytes();
-//                myThreadConnected.write(bytesToSend);
+                String strTheme = theme.getRGB().strTheme();
+                Log.v(LOG_TEG, "Отправили: " + strTheme);
+                byte[] bytesToSend = strTheme.getBytes();
+                myThreadConnected.write(bytesToSend);
                 break;
             }
             default: {
@@ -144,11 +138,11 @@ public class RecyclerActivity extends AppCompatActivity implements View.OnClickL
     protected void onStart() {
         super.onStart();
         // Запрос на включение Bluetooth
-//        if (!bluetoothAdapter.isEnabled()) {
-//            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-//        }
-//        setup();
+        if (!bluetoothAdapter.isEnabled()) {
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+        }
+        setup();
     }
 
     private void setup() {
