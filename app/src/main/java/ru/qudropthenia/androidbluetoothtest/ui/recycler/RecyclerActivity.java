@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -26,19 +25,22 @@ import java.util.Set;
 import java.util.UUID;
 
 import ru.qudropthenia.androidbluetoothtest.R;
+import ru.qudropthenia.androidbluetoothtest.engine.ApplicationData;
 import ru.qudropthenia.androidbluetoothtest.engine.Theme;
 import ru.qudropthenia.androidbluetoothtest.engine.ThemeList;
+import ru.qudropthenia.androidbluetoothtest.engine.bluetooth.BluetoothApp;
 import ru.qudropthenia.androidbluetoothtest.ui.theme.ChangeThemeActivity;
 
 public class RecyclerActivity extends AppCompatActivity implements View.OnClickListener {
     // BL
     private static final int REQUEST_ENABLE_BT = 1;
     private static final String HC_MAC = "00:19:08:00:0D:8F";
-    BluetoothAdapter bluetoothAdapter;
+    private BluetoothAdapter bluetoothAdapter;
     private UUID myUUID;
-    ThreadConnectBTdevice myThreadConnectBTdevice;
-    ThreadConnected myThreadConnected;
+    private ThreadConnectBTdevice myThreadConnectBTdevice;
+    private ThreadConnected myThreadConnected;
     private StringBuilder sb = new StringBuilder();
+    private BluetoothApp bluetoothApp;
 
     // App
     private ThemeAdapter adapter;
@@ -48,11 +50,14 @@ public class RecyclerActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        bluetoothApp = ((ApplicationData) getApplication()).bluetooth;
         setContentView(R.layout.activity_recycler);
-        themeListApp = ((ThemeList) getApplication());
+        themeListApp = ((ApplicationData) getApplication()).themeList;
         setupRecyclerView();
         setupFloatingButton();
-        blOnCreate();
+        // Запускаем наш обработчик bl
+        bluetoothApp.startBlWork(this);
+//        blOnCreate();
     }
 
     // Инициализация Recycler
@@ -103,9 +108,11 @@ public class RecyclerActivity extends AppCompatActivity implements View.OnClickL
             case R.id.recycler_item__color: {
                 final Theme theme = themeListApp.getThemeAtIndex(themeIndex);
                 String strTheme = theme.getRGB().strTheme();
-                Log.v(LOG_TEG, "Отправили: " + strTheme);
-                byte[] bytesToSend = strTheme.getBytes();
-                myThreadConnected.write(bytesToSend);
+                bluetoothApp.sendData(strTheme);
+                // Старая версия
+//                Log.v(LOG_TEG, "Отправили: " + strTheme);
+//                byte[] bytesToSend = strTheme.getBytes();
+//                myThreadConnected.write(bytesToSend);
                 break;
             }
             default: {
@@ -137,12 +144,12 @@ public class RecyclerActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onStart() {
         super.onStart();
-        // Запрос на включение Bluetooth
-        if (!bluetoothAdapter.isEnabled()) {
-            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-        }
-        setup();
+        // Запрос на включение Bluetooth (old)
+//        if (!bluetoothAdapter.isEnabled()) {
+//            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+//            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+//        }
+//        setup();
     }
 
     private void setup() {

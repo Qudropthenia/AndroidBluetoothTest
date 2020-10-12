@@ -19,6 +19,7 @@ import com.jaredrummler.android.colorpicker.ColorPanelView;
 import com.jaredrummler.android.colorpicker.ColorPickerView;
 
 import ru.qudropthenia.androidbluetoothtest.R;
+import ru.qudropthenia.androidbluetoothtest.engine.ApplicationData;
 import ru.qudropthenia.androidbluetoothtest.engine.Theme;
 import ru.qudropthenia.androidbluetoothtest.engine.ThemeList;
 import ru.qudropthenia.androidbluetoothtest.ui.recycler.RecyclerActivity;
@@ -35,7 +36,7 @@ public class ChangeThemeActivity extends Activity implements ColorPickerView.OnC
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFormat(PixelFormat.RGBA_8888);
-        themeListApp = ((ThemeList) getApplication());
+        themeListApp = ((ApplicationData) getApplication()).themeList;
 
         // Получение переданной темы по её индексу из List
         Bundle arguments = getIntent().getExtras();

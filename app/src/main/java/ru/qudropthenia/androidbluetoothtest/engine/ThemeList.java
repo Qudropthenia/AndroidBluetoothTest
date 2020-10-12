@@ -5,7 +5,7 @@ import android.app.Application;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ThemeList extends Application {
+public class ThemeList {
     private List<Theme> themes;
 
     public ThemeList() {
